@@ -71,6 +71,11 @@ class LotteryIndex extends Component {
 
   onSubmit = async event=> {
     event.preventDefault();
+
+    if (this.state.value <= 0.01) {
+      this.setState({message:'输入金额不正确！请重新输入。'});
+      return;
+    }
     const accounts = await web3.eth.getAccounts();
 
     console.log("accounts : ", accounts);
@@ -112,16 +117,16 @@ class LotteryIndex extends Component {
           <div>
             <label>你想参与的金额：</label>
             <input
+              placeholder = '不小于0.01'
               value = {this.state.value}  // {/* input 框默认值 */}
             //  {/* onChange 事件，监听输入框的输入， 将 event.target.value 的值赋值给 state value */}
               onChange = {event=>{this.setState({value:event.target.value})}}
-            /> ether 
+            /> ether
             {/* <p>value : {this.state.value}</p> */}
           </div>
           <button>提交</button>
         </form>
-        <p>{this.state.message}</p>
-
+          <p>{this.state.message}</p>
         <hr/>
         <h4>判断输赢</h4>
         <button onClick={this.onClick}>开始博彩</button>
